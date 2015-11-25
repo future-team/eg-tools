@@ -105,6 +105,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.__esModule = true;
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -145,7 +147,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var createStoreWithMiddleware = _redux.applyMiddleware(_reduxThunk2['default'], _fetch.middleware)(_redux.createStore);
 
 	        // 像使用 createStore() 一样使用它。
-	        var app = _redux.combineReducers(reducers, _fetching2['default']);
+	        var app = _redux.combineReducers(_extends({}, reducers), _fetching2['default']);
 	        var store = createStoreWithMiddleware(app);
 
 	        return _react2['default'].createElement(
