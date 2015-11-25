@@ -1,0 +1,26 @@
+{
+  "name": "eagle",
+  "version": "0.1.0",
+  "description": "The coolest cortex module.",
+  "main": "dist/eagle.min.js",
+  "devDependencies": {
+    "assert": "*"
+  },
+  "dependencies": {
+    "react": "~0.14.1",
+    "redux": "^1.0.1"
+  },
+  "repository": "git://code.dianpingoa.com/min.xiao/eagle.git",
+  "keywords": [
+    "core"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "min.xiao@dianping.com",
+    "email": "min.xiao@dianping.com"
+  },
+  "bugs": {
+    "url": "http://code.dianpingoa.com/min.xiao/eagle/issues"
+  },
+  "homepage": "http://code.dianpingoa.com/min.xiao/eagle"
+}
