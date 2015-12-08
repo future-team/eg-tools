@@ -72,7 +72,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.BindReact = _libBindReact2['default'];
 
-	var _libCreateReducer = __webpack_require__(31);
+	var _libCreateReducer = __webpack_require__(33);
 
 	var _libCreateReducer2 = _interopRequireDefault(_libCreateReducer);
 
@@ -129,7 +129,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _fetching = __webpack_require__(30);
 
-	var _fetching2 = _interopRequireDefault(_fetching);
+	var _LoadingBar = __webpack_require__(31);
+
+	var _LoadingBar2 = _interopRequireDefault(_LoadingBar);
 
 	var BindReact = (function (_Component) {
 	    _inherits(BindReact, _Component);
@@ -147,7 +149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var createStoreWithMiddleware = _redux.applyMiddleware(_reduxThunk2['default'], _fetch.middleware)(_redux.createStore);
 
 	        // 像使用 createStore() 一样使用它。
-	        var app = _redux.combineReducers(_extends({}, reducers), _fetching2['default']);
+	        var app = _redux.combineReducers(_extends({}, reducers, { fetching: _fetching.fetching }));
 	        var store = createStoreWithMiddleware(app);
 
 	        return _react2['default'].createElement(
@@ -163,7 +165,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _react2['default'].createElement(
 	            'div',
 	            null,
-	            _react2['default'].createElement(Module, null)
+	            _react2['default'].createElement(Module, null),
+	            _react2['default'].createElement(_LoadingBar2['default'], null)
 	        );
 	    };
 
@@ -1539,11 +1542,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            opts.dataType = 'json';
 	        }
 
+	        if (typeof opts.asyn == 'undefined') {
+	            opts.asyn = true;
+	        }
+
 	        var x = this.getXMLHttpRequest(),
 	            _this = this,
 	            uid = 'uid_' + new Date().getTime() + (Math.random() * 1e10).toFixed(0);
 
-	        x.open(opts.method || this.method, url);
+	        x.open(opts.method || this.method, url, opts.asyn);
 	        this._xhrs[uid] = x;
 
 	        if (opts.timeout) {
@@ -1947,6 +1954,269 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(4);
+
+	var _extend = __webpack_require__(32);
+
+	var _extend2 = _interopRequireDefault(_extend);
+
+	var LoadingBar = (function (_Component) {
+	    _inherits(LoadingBar, _Component);
+
+	    function LoadingBar(props, context) {
+	        _classCallCheck(this, _LoadingBar);
+
+	        _Component.call(this, props, context);
+	        this.init = false;
+	        this.moduleName = 'ref-loadingBar';
+	        this.style = {
+
+	            loadingbar: {
+	                position: 'fixed',
+	                zIndex: 2147483647,
+	                opacity: 1,
+	                top: 0,
+	                display: 'block',
+	                left: '-6px',
+	                width: '1%',
+	                height: '2px',
+	                background: '#b91f1f',
+	                MozBorderRadius: '1px',
+	                WebkitBorderRadius: '1px',
+	                borderRadius: '1px',
+	                MozTransition: 'all 500ms ease-in-out',
+	                msTransition: 'all 500ms ease-in-out',
+	                WebkitTransition: 'all 500ms ease-in-out',
+	                transition: 'all 500ms ease-in-out'
+	            },
+	            waiting: {
+	                MozAnimation: 'pulse 2s ease-out 0s infinite',
+	                msAnimation: 'pulse 2s ease-out 0s infinite',
+	                oAnimation: 'pulse 2s ease-out 0s infinite',
+	                WebkitAnimation: 'pulse 2s ease-out 0s infinite',
+	                animation: 'pulse 2s ease-out 0s infinite'
+	            },
+	            i: {
+	                opacity: 0.6,
+	                width: '180px',
+	                right: '-80px',
+	                display: 'block',
+	                clip: 'rect(-6px,90px,14px,-6px)'
+	            },
+	            b: {
+	                opacity: 0.6,
+	                width: '20px',
+	                right: '0',
+	                clip: 'rect(-6px,22px,14px,10px)'
+	            },
+	            bi: {
+	                position: 'absolute',
+	                top: '0',
+	                height: '2px',
+	                MozBoxShadow: '#b91f1f 1px 0 6px 1px',
+	                msBoxShadow: '#b91f1f 1px 0 6px 1px',
+	                WebkitBoxShadow: '#B91F1F 1px 0 6px 1px',
+	                boxShadow: '#B91F1F 1px 0 6px 1px',
+	                MozBorderRadius: '100%',
+	                WebkitBorderRadius: '100%',
+	                borderRadius: '100%'
+	            }
+
+	        };
+
+	        this.state = {
+	            fetching: this.props.fetching,
+	            style: {}
+	        };
+	    }
+
+	    LoadingBar.prototype.setProcess = function setProcess() {
+	        var fetching = this.props.fetching;
+
+	        if (this.init) {
+
+	            if (fetching) {
+	                this.setState({
+	                    style: {
+	                        width: 50 + Math.random() * 30 + "%",
+	                        opacity: 1
+	                    },
+	                    fetching: 1
+	                });
+	                //elm.style.width=(50 + Math.random() * 30)+ "%";
+	            }
+	        }
+	    };
+
+	    LoadingBar.prototype.hide = function hide() {
+	        if (this.init) {
+	            this.setState({
+	                style: {
+	                    width: '101%'
+	                },
+	                fetching: 0
+	            });
+
+	            setTimeout((function () {
+	                this.setState({
+	                    style: {
+	                        opacity: 0,
+	                        display: 'none',
+	                        width: '1%'
+	                    }
+	                });
+	            }).bind(this), 800);
+	        }
+	    };
+
+	    LoadingBar.prototype.componentDidMount = function componentDidMount() {
+	        this.init = true;
+	        this.setProcess();
+	    };
+
+	    LoadingBar.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	        if (nextProps.fetching == 0) {
+	            this.hide();
+	        } else {
+	            this.setProcess();
+	        }
+	    };
+
+	    LoadingBar.prototype.render = function render() {
+	        var style = this.style;
+	        //if(this.props.fetching==0){
+	        //    this.hide();
+	        //}
+	        return _react2['default'].createElement(
+	            'div',
+	            { ref: this.moduleName, style: _extend2['default']({}, style.loadingbar, this.state.style) },
+	            _react2['default'].createElement('i', { style: _extend2['default']({}, style.i, style.bi) }),
+	            _react2['default'].createElement('b', { style: _extend2['default']({}, style.b, style.bi) })
+	        );
+	    };
+
+	    var _LoadingBar = LoadingBar;
+	    LoadingBar = _reactRedux.connect(function (state) {
+	        return {
+	            fetching: state.fetching
+	        };
+	    })(LoadingBar) || LoadingBar;
+	    return LoadingBar;
+	})(_react.Component);
+
+	exports['default'] = LoadingBar;
+	module.exports = exports['default'];
+
+/***/ },
+/* 32 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var hasOwn = Object.prototype.hasOwnProperty;
+	var toStr = Object.prototype.toString;
+
+	var isArray = function isArray(arr) {
+		if (typeof Array.isArray === 'function') {
+			return Array.isArray(arr);
+		}
+
+		return toStr.call(arr) === '[object Array]';
+	};
+
+	var isPlainObject = function isPlainObject(obj) {
+		if (!obj || toStr.call(obj) !== '[object Object]') {
+			return false;
+		}
+
+		var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+		var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+		// Not own constructor property must be Object
+		if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+			return false;
+		}
+
+		// Own properties are enumerated firstly, so to speed up,
+		// if last one is own, then all properties are own.
+		var key;
+		for (key in obj) {/**/}
+
+		return typeof key === 'undefined' || hasOwn.call(obj, key);
+	};
+
+	module.exports = function extend() {
+		var options, name, src, copy, copyIsArray, clone,
+			target = arguments[0],
+			i = 1,
+			length = arguments.length,
+			deep = false;
+
+		// Handle a deep copy situation
+		if (typeof target === 'boolean') {
+			deep = target;
+			target = arguments[1] || {};
+			// skip the boolean and the target
+			i = 2;
+		} else if ((typeof target !== 'object' && typeof target !== 'function') || target == null) {
+			target = {};
+		}
+
+		for (; i < length; ++i) {
+			options = arguments[i];
+			// Only deal with non-null/undefined values
+			if (options != null) {
+				// Extend the base object
+				for (name in options) {
+					src = target[name];
+					copy = options[name];
+
+					// Prevent never-ending loop
+					if (target !== copy) {
+						// Recurse if we're merging plain objects or arrays
+						if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+							if (copyIsArray) {
+								copyIsArray = false;
+								clone = src && isArray(src) ? src : [];
+							} else {
+								clone = src && isPlainObject(src) ? src : {};
+							}
+
+							// Never move original objects, clone them
+							target[name] = extend(deep, clone, copy);
+
+						// Don't bring in undefined values
+						} else if (typeof copy !== 'undefined') {
+							target[name] = copy;
+						}
+					}
+				}
+			}
+		}
+
+		// Return the modified object
+		return target;
+	};
+
+
+
+/***/ },
+/* 33 */
 /***/ function(module, exports) {
 
 	"use strict";
