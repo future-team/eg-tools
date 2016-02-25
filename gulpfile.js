@@ -5,6 +5,8 @@ var Server = require('karma').Server;
 var demoWebpackConfig = require('./webpack/demo.config');
 var webpackConfig = require('./webpack/webpack.config');
 
+var babel = require('gulp-babel');
+
 var error = function(e){
   console.error(e);
   if(e.stack){
@@ -58,11 +60,17 @@ gulp.task('min-webpack', function(done) {
   });
 });
 
+gulp.task('babel', function(done){
+  return gulp.src('src/**/*.js')
+      .pipe(babel())
+      .pipe(gulp.dest('lib'));
+});
+
 gulp.task('watch', function () {
   gulp.watch(['./lib/**/*.*'], ['demo']);
 });
 
-gulp.task('default', ['require-webpack'/*, 'html', 'asset'*/]);
+gulp.task('default', ['babel','require-webpack'/*, 'html', 'asset'*/]);
 gulp.task('test',['karma']);
 gulp.task('demo', ['demo-webpack']);
 gulp.task('min',['min-webpack']);

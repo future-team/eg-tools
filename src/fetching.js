@@ -1,11 +1,4 @@
-'use strict';
-
-exports.__esModule = true;
-exports.fetching = fetching;
-
-function fetching(state, action) {
-    if (state === undefined) state = 0;
-
+export function fetching(state = 0, action) {
     switch (action.type) {
         case 'fetch_begin':
             return 1;
@@ -14,6 +7,4 @@ function fetching(state, action) {
         default:
             return state;
     }
-}
-
-;
+};

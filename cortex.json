@@ -1,6 +1,6 @@
 {
   "name": "eagle",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The coolest cortex module.",
   "main": "dist/eagle.min.js",
   "devDependencies": {

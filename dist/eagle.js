@@ -66,27 +66,27 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _libBindReact = __webpack_require__(2);
+	var _BindReact2 = __webpack_require__(2);
 
-	var _libBindReact2 = _interopRequireDefault(_libBindReact);
+	var _BindReact3 = _interopRequireDefault(_BindReact2);
 
-	exports.BindReact = _libBindReact2['default'];
+	exports.BindReact = _BindReact3['default'];
 
-	var _libCreateReducer = __webpack_require__(33);
+	var _createReducer2 = __webpack_require__(33);
 
-	var _libCreateReducer2 = _interopRequireDefault(_libCreateReducer);
+	var _createReducer3 = _interopRequireDefault(_createReducer2);
 
-	exports.createReducer = _libCreateReducer2['default'];
+	exports.createReducer = _createReducer3['default'];
 
-	var _libFetch = __webpack_require__(24);
+	var _fetch2 = __webpack_require__(24);
 
-	var _libFetch2 = _interopRequireDefault(_libFetch);
+	var _fetch3 = _interopRequireDefault(_fetch2);
 
-	exports.fetch = _libFetch2['default'];
+	exports.fetch = _fetch3['default'];
 
-	var _libFetching = __webpack_require__(30);
+	var _fetching = __webpack_require__(30);
 
-	exports.fetching = _libFetching.fetching;
+	exports.fetching = _fetching.fetching;
 
 	window['Eagle'] = {};
 
@@ -1632,7 +1632,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        opts.method = 'GET';
 
 	        var query = _jqueryParam2['default'](opts.data);
-	        var fullUrl = url + (query.length ? '?' + query : '');
+	        var sym = url.indexOf('?') != -1 ? '&' : '?';
+	        var fullUrl = url + (query.length ? sym + query : '');
 	        opts.data = null;
 	        this.send(fullUrl, opts);
 	        return this;
@@ -1659,8 +1660,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            url = this.mockAddress + url + '.json';
 	            opts.method = 'GET';
 	        }
-	        url += url.indexOf('?') != -1 ? '&' : '?';
-	        url += 'uid=' + +new Date();
+	        //url+='uuid='+(+new Date());
 
 	        this.ajax(url, opts);
 	        return this;
