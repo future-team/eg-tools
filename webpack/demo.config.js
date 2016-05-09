@@ -35,12 +35,6 @@ module.exports =extend({}, {
             commonjs2: 'react',
             commonjs: 'react',
             amd: 'react'
-        },
-        'eagle': {
-            root: 'Eagle',
-            commonjs2: 'Eagle',
-            commonjs: 'Eagle',
-            amd: 'Eagle'
         }
     }],
     module:{

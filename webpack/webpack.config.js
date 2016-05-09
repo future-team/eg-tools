@@ -4,6 +4,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var extend = require('extend');
+var p = require('../package.json');
 
 module.exports ={
     entry:[path.join(process.cwd(),'src/index.js')],
@@ -18,7 +19,7 @@ module.exports ={
     output:{
         libraryTarget: 'umd',
         path:path.join(process.cwd(),'dist'),
-        filename:'eagle.js'
+        filename:p.name+'.js'
     },
     externals:[{
         'react': {

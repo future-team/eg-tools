@@ -1,9 +1,9 @@
 {
-  "name": "eagle",
-  "version": "0.1.1",
+  "name": "eg-tools",
+  "version": "2.0.1",
   "description": "The coolest cortex module.",
   "main": "lib/index",
-  "repository": "git://code.dianpingoa.com/min.xiao/eagle-core.git",
+  "repository": "git@github.com:future-team/eg-tools.git",
   "keywords": [
     "core"
   ],
@@ -18,7 +18,10 @@
     "name": "min.xiao@dianping.com",
     "email": "min.xiao@dianping.com"
   },
-  "dependencies":{},
+  "dependencies":{
+    "classnames": "^2.1.3",
+    "jquery-param": "^0.2.0"
+  },
   "devDependencies": {
     "babel": "^6.0.15",
     "babel-core": "^5.8.23",
@@ -38,7 +41,6 @@
     "gulp-util": "^3.0.6",
     "gulp-webpack": "^1.5.0",
     "jasmine-core": "^2.3.4",
-    "jquery-param": "^0.2.0",
     "karma": "^0.13.15",
     "karma-chrome-launcher": "^0.2.1",
     "karma-cli": "^0.1.1",
@@ -59,7 +61,7 @@
     "whatwg-fetch": "^0.10.1"
   },
   "bugs": {
-    "url": "http://code.dianpingoa.com/min.xiao/eagle/issues"
+    "url": "https://github.com/future-team/eg-tools/issues"
   },
-  "homepage": "http://code.dianpingoa.com/min.xiao/eagle"
+  "homepage": "https://github.com/future-team/eg-tools"
 }

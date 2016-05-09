@@ -88,10 +88,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.fetching = _fetching.fetching;
 
-	window['Eagle'] = {};
+	window['EgTools'] = {};
 
 	['BindReact', 'createReducer', 'fetch', 'fetching'].forEach(function (clazzName) {
-	    Eagle[clazzName] = exports[clazzName];
+	    EgTools[clazzName] = exports[clazzName];
 	});
 
 /***/ },

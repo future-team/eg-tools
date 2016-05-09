@@ -4,6 +4,7 @@ var webpack = require('webpack');
 var Server = require('karma').Server;
 var demoWebpackConfig = require('./webpack/demo.config');
 var webpackConfig = require('./webpack/webpack.config');
+var p = require('./package.json');
 
 var babel = require('gulp-babel');
 
@@ -46,7 +47,7 @@ gulp.task('require-webpack', function(done) {
 gulp.task('min-webpack', function(done) {
 
   var wbpk = Object.create(webpackConfig);
-  wbpk.output.filename = 'eagle.min.js';
+  wbpk.output.filename = p.name+'.min.js';
   wbpk.plugins = [
     new webpack.optimize.UglifyJsPlugin()
   ];
