@@ -80,18 +80,21 @@ let Req = class Request{
             }
         };
         opts.header = opts.header?opts.header:{};
-        if (opts.method && opts.method.toUpperCase() === 'POST') {
-            x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        if (opts.method && opts.method.toUpperCase() === 'POST' && !opts.header['Content-Type'] ) {
+            //x.setRequestHeader('Content-Type', 'application/json');
+            //x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            opts.header['Content-Type'] = 'application/x-www-form-urlencoded';
         }
         if (!opts.cache&&opts.header&&!('If-Modified-Since' in opts.header)){
-            x.setRequestHeader("If-Modified-Since","Thu, 01 Jan 1970 00:00:00 GMT");
+            //x.setRequestHeader("If-Modified-Since","Thu, 01 Jan 1970 00:00:00 GMT");
+            opts.header['If-Modified-Since'] = "Thu, 01 Jan 1970 00:00:00 GMT";
         }
         x.setRequestHeader('Accept', '*/*');
 
         for (let t in opts.header){
             x.setRequestHeader(t,opts.header[t]);
         }
-        x.send(opts.data);
+        x.send(opts.data || null );
 
         return this;
     }
@@ -116,8 +119,10 @@ let Req = class Request{
 
         if(opts.method && opts.method.toLowerCase() == 'post'){
             this.post(url,opts);
-        }else{
+        }else if(opts.method && opts.method.toLowerCase() == 'get'){
             this.get(url,opts);
+        }else{
+            this.send(url, opts);
         }
     }
 
@@ -137,7 +142,7 @@ let Req = class Request{
         opts = opts || {};
         opts.method = 'POST';
 
-        opts.data = jqParam(opts.data);
+        opts.data = typeof(opts.data)!='string'? jqParam(opts.data) : opts.data;
         this.send(url, opts);
     }
 

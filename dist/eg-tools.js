@@ -1585,18 +1585,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        };
 	        opts.header = opts.header ? opts.header : {};
-	        if (opts.method && opts.method.toUpperCase() === 'POST') {
-	            x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	        if (opts.method && opts.method.toUpperCase() === 'POST' && !opts.header['Content-Type']) {
+	            //x.setRequestHeader('Content-Type', 'application/json');
+	            //x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	            opts.header['Content-Type'] = 'application/x-www-form-urlencoded';
 	        }
 	        if (!opts.cache && opts.header && !('If-Modified-Since' in opts.header)) {
-	            x.setRequestHeader("If-Modified-Since", "Thu, 01 Jan 1970 00:00:00 GMT");
+	            //x.setRequestHeader("If-Modified-Since","Thu, 01 Jan 1970 00:00:00 GMT");
+	            opts.header['If-Modified-Since'] = "Thu, 01 Jan 1970 00:00:00 GMT";
 	        }
 	        x.setRequestHeader('Accept', '*/*');
 
 	        for (var t in opts.header) {
 	            x.setRequestHeader(t, opts.header[t]);
 	        }
-	        x.send(opts.data);
+	        x.send(opts.data || null);
 
 	        return this;
 	    };
@@ -1622,8 +1625,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        if (opts.method && opts.method.toLowerCase() == 'post') {
 	            this.post(url, opts);
-	        } else {
+	        } else if (opts.method && opts.method.toLowerCase() == 'get') {
 	            this.get(url, opts);
+	        } else {
+	            this.send(url, opts);
 	        }
 	    };
 
@@ -1643,7 +1648,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        opts = opts || {};
 	        opts.method = 'POST';
 
-	        opts.data = _jqueryParam2['default'](opts.data);
+	        opts.data = typeof opts.data != 'string' ? _jqueryParam2['default'](opts.data) : opts.data;
 	        this.send(url, opts);
 	    };
 
