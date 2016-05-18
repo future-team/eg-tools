@@ -1654,7 +1654,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    Request.prototype.isMock = function isMock() {
 	        var location = window.location,
-	            localhost = /127.0.0.1|localhost/.test(location.hostname),
+	            localhost = /127.0.0.1|localhost/.test(location.hostname) && location.href.indexOf('8080') < 0,
 	            mockParam = !!_querystring2['default'].parse(location.search && location.search.substring(1)).mock;
 	        return localhost || mockParam;
 	    };
@@ -1662,7 +1662,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Request.prototype.fetch = function fetch(url, opts) {
 	        var param = {};
 	        if (this.isMock()) {
-	            url = this.mockAddress + url + '.json';
+	            url = this.mockAddress + url.split('?')[0] + '.json';
 	            opts.method = 'GET';
 	        }
 	        //url+='uuid='+(+new Date());

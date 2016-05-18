@@ -148,7 +148,7 @@ let Req = class Request{
 
     isMock(){
         let location = window.location,
-            localhost =/127.0.0.1|localhost/.test(location.hostname),
+            localhost =/127.0.0.1|localhost/.test(location.hostname) && location.href.indexOf('8080')<0,
             mockParam =!!(querystring.parse(location.search && location.search.substring(1)).mock);
         return localhost || mockParam;
     }
@@ -156,7 +156,7 @@ let Req = class Request{
     fetch(url ,opts){
         let param = {};
         if(this.isMock() ){
-            url = this.mockAddress+url+'.json';
+            url = this.mockAddress+url.split('?')[0]+'.json';
             opts.method = 'GET';
         }
         //url+='uuid='+(+new Date());
