@@ -1,7 +1,5 @@
 import request from './request';
 
-let notnull=function(){};
-
 let dispatch;
 
 function showLoading(){
@@ -17,20 +15,29 @@ function hideLoading(){
 }
 
 
-function fetch(url,params={},success=notnull,error=notnull,opts={}){
+function fetch(url,params={},success,error='notnull',opts={}){
 
     opts.success = function(data,xhr){
         hideLoading();
-        success(data,xhr);
+        success && success(data,xhr);
+        fetch.successEvent(xhr)
     };
     opts.error = function(xhr){
+        if(error=='notnull'){
+          fetch.errorEvent(xhr)
+        }else{
+            error && error(xhr);
+        }
         hideLoading();
-        error(xhr);
     };
     opts.data = params;
 
     showLoading();
     request.fetch(url,opts );
+}
+fetch.errorEvent=()=>{
+}
+fetch.successEvent=()=>{
 }
 
 fetch.middleware = store=>{

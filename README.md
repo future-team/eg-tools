@@ -40,5 +40,8 @@ $ npm install eg-tools --save
                 return data.merge(Immutable.fromJS(action.data));
             }
         })
+        //增加全局失败提示方法，默认为空。若有fetch.errorEvent方法,则执行该方法。可统一处理。
+        //增加全局成功提示方法，默认为空。若有fetch.successEvent方法,则执行该方法
+        
 ```
 
