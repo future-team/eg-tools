@@ -7,6 +7,9 @@
 $ npm install eg-tools --save
 ```
 
+## 依赖
+
+* immutable.js
 
 ## Usage
 
