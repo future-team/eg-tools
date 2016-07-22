@@ -23,17 +23,17 @@ $ npm install eg-tools --save
 		//require('../less/public.less');
 		
 		React.render(
-		<BindReact Module={AppRouter} reducers={reducers} />,
+		<BindReact Module={AppRouter} reducers={reducers} middleware={[]} />,
 		document.getElementById('root')
 		);
 		
 		//数据获取
-		fetch('test/test',{},function(data){
+		fetch('test/test'/*url*/,{}/*params*/,function(data){
 			dispatch({
 				type: actionType.QUERY,
 				data: data
 			});
-		})
+		}/*success callback*/,function(){}/*error callback*/,{}/*options*/)
 		
 		export const test = createReducer(initialState, {
             [actionType.QUERY]: (data, action) => {
@@ -45,3 +45,81 @@ $ npm install eg-tools --save
         
 ```
 
+## 双向绑定
+
+### 1. createReducer
+
+```js
+    
+    import { createReducer } from 'eg-tools';
+    import Immutable from 'immutable';
+    
+    import {actionType} from '../constants/action-type.es6';
+    
+    const initialState = Immutable.fromJS({
+        name:'init'
+    });
+    
+    export const test = createReducer('test',initialState, {
+        [actionType.QUERY]: (data, action) => {
+            return data.merge(Immutable.fromJS(action.data));
+        }
+    });
+```
+
+### 2. setStore
+
+```js
+    
+    import {bindingMixin} from 'eg-tools';
+    
+    @bindingMixin
+    export default class TestWebContainer extends Component {
+        constructor(props) {
+            super(props);
+            
+            //关联store
+            this.setBinding('test');
+    
+        }
+    }
+```
+
+### 3. binding
+
+```js
+
+        render() {
+            return (
+                <div>
+                    <input type="text"  valueLink={this.binding('name')  } />
+                    {this.props.test.get('name') }
+                </div>
+            );
+        }
+```
+
+## Manual Change Functions
+
+帮助用户快速根据reducer路径更改store值，避免写更多的action。
+
+1. 手动根据路径改变reducer的值:
+
+```js
+
+    this.manualChange('name', 'john');
+```
+
+2. 手动根据路径改变reducer的值:
+
+```js
+
+    this.manualChange('name', function(age){
+        return ++age;
+    });
+```
+
+
+## update
+
+* `version 3.0.3` 新增双向绑定，store数据可视视图

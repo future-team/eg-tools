@@ -36,11 +36,11 @@ function fetch(url,params={},success,error='notnull',opts={}){
     request.fetch(url,opts );
 }
 fetch.errorEvent=()=>{
-}
+};
 fetch.successEvent=()=>{
-}
+};
 
-fetch.middleware = store=>{
+fetch.loadingMiddleware = store=>{
 
     dispatch = store.dispatch;
     return next=>{

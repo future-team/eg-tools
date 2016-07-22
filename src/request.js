@@ -1,4 +1,4 @@
-import querystring from 'querystring';
+import {isMock} from './mock.js';
 import jqParam from 'jquery-param';
 
 
@@ -147,10 +147,11 @@ let Req = class Request{
     }
 
     isMock(){
-        let location = window.location,
+        /*let location = window.location,
             localhost =/127.0.0.1|localhost/.test(location.hostname) && location.href.indexOf('8080')<0,
             mockParam =!!(querystring.parse(location.search && location.search.substring(1)).mock);
-        return localhost || mockParam;
+        return localhost || mockParam;*/
+        return isMock();
     }
 
     fetch(url ,opts){
