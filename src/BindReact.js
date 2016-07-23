@@ -8,9 +8,11 @@ import thunk from 'redux-thunk';
 
 import { loadingMiddleware as fetchMiddleware } from './fetch';
 import {fetching} from './fetching';
-import LoadingBar from './LoadingBar';
+//import LoadingBar from './LoadingBar';
+import LoadingBar from './Bar.js';
 import {isMock} from './mock.js';
 
+// bar reducers middleware  Module
 export default class BindReact extends Component {
     render() {
         let {reducers,middleware} = this.props;
@@ -21,7 +23,7 @@ export default class BindReact extends Component {
             middleware = [];
         }
 
-        console.dir(process);
+
         // 并返回一个包含兼容 API 的函数。
         let middlewareList = [
             thunk,
@@ -75,7 +77,7 @@ export default class BindReact extends Component {
             <div>
                 <Module dispatch={dispatch} />
                 {Dev ? <Dev /> :''}
-                <LoadingBar />
+                <LoadingBar {...this.props}  />
             </div>
         );
     }

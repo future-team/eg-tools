@@ -2,16 +2,24 @@ import request from './request';
 
 let dispatch;
 
-function showLoading(){
-    dispatch({
-        type:'fetch_begin'
-    });
+let fetching = 0;
+
+function showLoading(method){
+    if (fetching === 0) {
+        dispatch({
+            type: method.toLowerCase() === 'get' ?'fetch_begin':'fetch_submit_begin'
+        });
+    }
+    fetching+=1;
 }
 
 function hideLoading(){
-    dispatch({
-        type:'fetch_end'
-    });
+    fetching -= 1;
+    if (fetching === 0) {
+        dispatch({
+            type: 'fetch_end'
+        });
+    }
 }
 
 
@@ -32,8 +40,9 @@ function fetch(url,params={},success,error='notnull',opts={}){
     };
     opts.data = params;
 
-    showLoading();
-    request.fetch(url,opts );
+    showLoading(opts.method ? opts.method : 'get');
+
+    return request.fetch(url,opts );
 }
 fetch.errorEvent=()=>{
 };
@@ -48,6 +57,6 @@ fetch.loadingMiddleware = store=>{
             return next(action);
         }
     }
-}
+};
 
 export default fetch;

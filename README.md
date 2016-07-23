@@ -15,7 +15,7 @@ $ npm install eg-tools --save
 
 ```js
 
-		//BindReact,createReducer,fetch,fetching
+		//BindReact,createReducer,fetch,fetching,promisefetch
 		
 		import React from 'react';
 		import AppRouter from './containers/AppRouter';
@@ -25,8 +25,15 @@ $ npm install eg-tools --save
 		require('../less/index.less');
 		//require('../less/public.less');
 		
+		/** BindReact   用于redux和react建立联系*/
+		//autoShowFetching 是否自动显示loadingBar
+		//middleware 自定义中间件
+		//reducers redux store集合
+		//barName loadingBar名字，有两种，分别为web和app两种选择
+		//Module react 组件对象
+		
 		React.render(
-		<BindReact Module={AppRouter} reducers={reducers} middleware={[]} />,
+		<BindReact Module={AppRouter} reducers={reducers} autoShowFetching={true} barName="web" middleware={[]} />,
 		document.getElementById('root')
 		);
 		
@@ -38,6 +45,25 @@ $ npm install eg-tools --save
 			});
 		}/*success callback*/,function(){}/*error callback*/,{}/*options*/)
 		
+		//promisefetch
+		import {promisefetch as fetch} from 'eg-tools';
+		
+		fetch('/test').then(function(data){
+    
+                dispatch({
+                    type: actionType.QUERY,
+                    data: data
+                });
+        }).then(()=>{
+            console.dir('test fetch for promise');
+        }).then(()=>{
+            console.dir('callback');
+        },(xhr)=>{
+            console.dir(xhr);
+        });
+        
+		
+		//创建store
 		export const test = createReducer(initialState, {
             [actionType.QUERY]: (data, action) => {
                 return data.merge(Immutable.fromJS(action.data));
@@ -126,3 +152,4 @@ $ npm install eg-tools --save
 ## update
 
 * `version 3.0.3` 新增双向绑定，store数据可视视图
+* `version 4.0.2` 新增promise fetch方法，新增移动端loadingbar，增加fetch返回值为request对象 ；新增fetch loadingbar状态fetch_submit_begin；对外提供LoadingBar组件
