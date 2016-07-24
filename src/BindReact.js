@@ -15,7 +15,7 @@ import {isMock} from './mock.js';
 // bar reducers middleware  Module
 export default class BindReact extends Component {
     render() {
-        let {reducers,middleware} = this.props;
+        let {reducers,middleware,devPanel} = this.props;
 
 
         if(typeof(middleware) =='undefined'){

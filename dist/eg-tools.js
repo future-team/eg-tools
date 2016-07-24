@@ -170,6 +170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _props = this.props;
 	        var reducers = _props.reducers;
 	        var middleware = _props.middleware;
+	        var devPanel = _props.devPanel;
 
 	        if (typeof middleware == 'undefined') {
 
@@ -17622,13 +17623,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var dispatch = window.dispatch || this.props.dispatch;
 
 	        //可能会操作多个不同的store   user,index,list...
-	        var reducerPathArray = reducerPath.split(',');
+	        var reducerPathArray = reducerPath.split('.');
 	        //拿最后一个[user,index,list]  = 'list'
 	        var reducerName = reducerPathArray[reducerPathArray.length - 1];
 
 	        var store = this.props[reducerName];
 	        var topicName = reducerPathArray.shift();
-	        var readPath = path.split(',');
+	        var readPath = path.split('.');
 	        var pathArray = reducerPathArray.concat(readPath);
 	        var value = store.getIn(readPath);
 
@@ -17669,7 +17670,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var reducerPath = this.bindingOrigin.reducerPath;
 
-	        var reducerPathArray = reducerPath.split(',');
+	        var reducerPathArray = reducerPath.split('.');
 	        var dispatch = window.dispatch || this.props.dispatch;
 
 	        if (typeof newValue === "function") {
@@ -17678,7 +17679,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        var topicName = reducerPathArray.shift();
-	        var pathArray = reducerPathArray.concat(path.split(','));
+	        var pathArray = reducerPathArray.concat(path.split('.'));
 
 	        if (typeof newValue === "function") {
 	            var value = store.getIn(pathArray);

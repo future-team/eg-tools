@@ -11,13 +11,13 @@ export default function bindingMixin(DecoratedComponent) {
         var dispatch = window.dispatch|| this.props.dispatch;
 
         //可能会操作多个不同的store   user,index,list...
-        let reducerPathArray = reducerPath.split(',');
+        let reducerPathArray = reducerPath.split('.');
         //拿最后一个[user,index,list]  = 'list'
         let reducerName = reducerPathArray[reducerPathArray.length - 1];
 
         let store = this.props[reducerName];
         let topicName = reducerPathArray.shift();
-        let readPath = path.split(',');
+        let readPath = path.split('.');
         let pathArray = reducerPathArray.concat(readPath);
         let value = store.getIn(readPath);
 
@@ -56,7 +56,7 @@ export default function bindingMixin(DecoratedComponent) {
         let reducerName,store;
 
         let {reducerPath}=this.bindingOrigin;
-        let reducerPathArray = reducerPath.split(',');
+        let reducerPathArray = reducerPath.split('.');
         var dispatch = window.dispatch|| this.props.dispatch;
 
         if(typeof newValue === "function"){
@@ -65,7 +65,7 @@ export default function bindingMixin(DecoratedComponent) {
         }
 
         let topicName = reducerPathArray.shift();
-        let pathArray = reducerPathArray.concat(path.split(','));
+        let pathArray = reducerPathArray.concat(path.split('.'));
 
 
         if(typeof newValue === "function") {
