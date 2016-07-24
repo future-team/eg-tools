@@ -15,7 +15,7 @@ import {isMock} from './mock.js';
 // bar reducers middleware  Module
 export default class BindReact extends Component {
     render() {
-        let {reducers,middleware,devPanel} = this.props;
+        let {reducers,middleware,autoDevTools} = this.props;
 
 
         if(typeof(middleware) =='undefined'){
@@ -33,19 +33,14 @@ export default class BindReact extends Component {
 
         let createStoreWithMiddleware=null;
         let dev = '';
-        if(!isMock() ){
+        if(autoDevTools && isMock() ){
 
-            createStoreWithMiddleware = (
-                //你要使用的中间件，放在前面
-                applyMiddleware(...middlewareList)
-            );
-
-        }else{/*
-            let createStoreWithMiddleware = compose(
-                applyMiddleware(...middlewareList),
-                //必须的！启用带有monitors（监视显示）的DevTools
-                DevTools.instrument()
-                )(createStore);*/
+            /*
+             let createStoreWithMiddleware = compose(
+             applyMiddleware(...middlewareList),
+             //必须的！启用带有monitors（监视显示）的DevTools
+             DevTools.instrument()
+             )(createStore);*/
             dev = require('./DevTools');
             if(dev){
                 createStoreWithMiddleware = compose(
@@ -56,6 +51,11 @@ export default class BindReact extends Component {
                 );
             }
 
+        }else{
+            createStoreWithMiddleware = (
+                //你要使用的中间件，放在前面
+                applyMiddleware(...middlewareList)
+            );
         }
 
 

@@ -170,7 +170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _props = this.props;
 	        var reducers = _props.reducers;
 	        var middleware = _props.middleware;
-	        var devPanel = _props.devPanel;
+	        var autoDevTools = _props.autoDevTools;
 
 	        if (typeof middleware == 'undefined') {
 
@@ -182,18 +182,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var createStoreWithMiddleware = null;
 	        var dev = '';
-	        if (!_mockJs.isMock()) {
+	        if (autoDevTools && _mockJs.isMock()) {
 
-	            createStoreWithMiddleware =
-	            //你要使用的中间件，放在前面
-	            _redux.applyMiddleware.apply(undefined, middlewareList);
-	        } else {
 	            /*
-	            let createStoreWithMiddleware = compose(
-	              applyMiddleware(...middlewareList),
-	              //必须的！启用带有monitors（监视显示）的DevTools
-	              DevTools.instrument()
-	              )(createStore);*/
+	             let createStoreWithMiddleware = compose(
+	             applyMiddleware(...middlewareList),
+	             //必须的！启用带有monitors（监视显示）的DevTools
+	             DevTools.instrument()
+	             )(createStore);*/
 	            dev = __webpack_require__(44);
 	            if (dev) {
 	                createStoreWithMiddleware = _redux.compose(
@@ -202,6 +198,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                //必须的！启用带有monitors（监视显示）的DevTools
 	                dev.instrument());
 	            }
+	        } else {
+	            createStoreWithMiddleware =
+	            //你要使用的中间件，放在前面
+	            _redux.applyMiddleware.apply(undefined, middlewareList);
 	        }
 
 	        // 像使用 createStore() 一样使用它。

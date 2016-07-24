@@ -154,3 +154,4 @@ $ npm install eg-tools --save
 * `version 3.0.3` 新增双向绑定，store数据可视视图
 * `version 4.0.2` 新增promise fetch方法，新增移动端loadingbar，增加fetch返回值为request对象 ；新增fetch loadingbar状态fetch_submit_begin；对外提供LoadingBar组件
 * `version 4.0.3` 更改双向绑定深入修改时的语法。
+* `version 4.0.4` 关闭自动弹出redux日志面板，改为通过autoDevTools来控制显示或隐藏。
