@@ -7,7 +7,8 @@ let Req = class Request{
     constructor(){
         this.method = 'GET';
         this._xhrs = {};
-        this.mockAddress=`${location.origin}/mocks/`;
+        let pathname=location.pathname.substr(0,location.pathname.lastIndexOf('/')+1);
+        this.mockAddress=`${location.origin}${pathname}mocks/`;
     }
 
     getXMLHttpRequest() {

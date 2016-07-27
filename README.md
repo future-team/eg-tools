@@ -155,3 +155,4 @@ $ npm install eg-tools --save
 * `version 4.0.2` 新增promise fetch方法，新增移动端loadingbar，增加fetch返回值为request对象 ；新增fetch loadingbar状态fetch_submit_begin；对外提供LoadingBar组件
 * `version 4.0.3` 更改双向绑定深入修改时的语法。
 * `version 4.0.4` 关闭自动弹出redux日志面板，改为通过autoDevTools来控制显示或隐藏。
+* `version 5.0.1` 修改mock url地址在深目录的情况下能够正常请求
