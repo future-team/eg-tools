@@ -158,7 +158,7 @@ let Req = class Request{
     fetch(url ,opts){
         let param = {};
         if(this.isMock() ){
-            url = this.mockAddress+url.split('?')[0]+'.json';
+            url = this.mockAddress+url.split('?')[0].toLowerCase()+'.json';
             opts.method = 'GET';
         }
         //url+='uuid='+(+new Date());

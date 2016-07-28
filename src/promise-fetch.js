@@ -10,6 +10,6 @@ export default (url,options={body:{},method:'GET'})=>{
             resolve(data,xhr);
         },(xhr)=>{
             reject(xhr);
-        });
+        },options);
     });
 }
