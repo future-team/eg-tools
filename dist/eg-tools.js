@@ -2346,7 +2346,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Request.prototype.fetch = function fetch(url, opts) {
 	        var param = {};
 	        if (this.isMock()) {
-	            url = this.mockAddress + url.split('?')[0] + '.json';
+	            url = this.mockAddress + url.split('?')[0].toLowerCase() + '.json';
 	            opts.method = 'GET';
 	        }
 	        //url+='uuid='+(+new Date());
@@ -17595,7 +17595,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            resolve(data, xhr);
 	        }, function (xhr) {
 	            reject(xhr);
-	        });
+	        }, options);
 	    });
 	};
 
