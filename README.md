@@ -33,7 +33,10 @@ $ npm install eg-tools --save
 		//Module react 组件对象
 		
 		React.render(
-		<BindReact Module={AppRouter} reducers={reducers} autoShowFetching={true} barName="web" middleware={[]} />,
+		<BindReact Module={AppRouter} reducers={reducers} autoShowFetching={false} barName="web" middleware={[]}>
+		    {<!--此处元素会追加到页面的body结束符之前主内容外-->}
+		    <div></div>
+		</BindReact>,
 		document.getElementById('root')
 		);
 		
@@ -48,7 +51,14 @@ $ npm install eg-tools --save
 		//promisefetch
 		import {promisefetch as fetch} from 'eg-tools';
 		
-		fetch('/test').then(function(data){
+		fetch('/test',{
+		    body:{},
+		    timeout:null,
+		    asyn:false,
+		    dataType:'json',
+		    header:{},
+		    method:'get',
+		}).then(function(data){
     
                 dispatch({
                     type: actionType.QUERY,

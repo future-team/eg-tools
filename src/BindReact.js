@@ -72,12 +72,13 @@ export default class BindReact extends Component {
     }
 
     show(dispatch,Dev){
-        const { Module} = this.props;
+        const { Module,children} = this.props;
         return (
             <div>
                 <Module dispatch={dispatch} />
                 {Dev ? <Dev /> :''}
                 <LoadingBar {...this.props}  />
+                {children}
             </div>
         );
     }
