@@ -1,6 +1,6 @@
 {
   "name": "eg-tools",
-  "version": "6.0.1",
+  "version": "6.0.2",
   "description": "The coolest cortex module.",
   "main": "lib/index",
   "repository": "git@github.com:future-team/eg-tools.git",

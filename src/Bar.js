@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import LoadingBar from './LoadingBar';
 import AppLoadingBar from './AppLoadingBar';
 
-export default class BindReact extends Component {
+export default class Bar extends Component {
 
     constructor(props,context){
         super(props,context);
@@ -20,7 +20,7 @@ export default class BindReact extends Component {
         const Bar = this.barList[barName?barName:'web'];
 
         return (
-            autoShowFetching?<Bar>{children}</Bar> :null
+            autoShowFetching?<Bar /> :null
         );
     }
 }

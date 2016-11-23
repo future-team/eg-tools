@@ -223,14 +223,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    BindReact.prototype.show = function show(dispatch, Dev) {
-	        var Module = this.props.Module;
+	        var _props2 = this.props;
+	        var Module = _props2.Module;
+	        var children = _props2.children;
 
 	        return _react2['default'].createElement(
 	            'div',
 	            null,
 	            _react2['default'].createElement(Module, { dispatch: dispatch }),
 	            Dev ? _react2['default'].createElement(Dev, null) : '',
-	            _react2['default'].createElement(_BarJs2['default'], this.props)
+	            _react2['default'].createElement(_BarJs2['default'], this.props),
+	            children
 	        );
 	    };
 
@@ -2129,6 +2132,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function hideLoading() {
 	    fetching -= 1;
+	    if (fetching <= 0) {
+	        fetching = 0;
+	    }
 	    if (fetching === 0) {
 	        dispatch({
 	            type: 'fetch_end'
@@ -2141,6 +2147,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var error = arguments.length <= 3 || arguments[3] === undefined ? 'notnull' : arguments[3];
 	    var opts = arguments.length <= 4 || arguments[4] === undefined ? {} : arguments[4];
 
+	    var isLoadingBar = typeof opts.isLoadingBar == 'boolean' ? opts.isLoadingBar : true;
 	    opts.success = function (data, xhr) {
 	        hideLoading();
 	        success && success(data, xhr);
@@ -2156,7 +2163,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    opts.data = params;
 
-	    showLoading(opts.method ? opts.method : 'get');
+	    isLoadingBar && showLoading(opts.method ? opts.method : 'get');
 
 	    return _request2['default'].fetch(url, opts);
 	}
@@ -2699,11 +2706,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _AppLoadingBar2 = _interopRequireDefault(_AppLoadingBar);
 
-	var BindReact = (function (_Component) {
-	    _inherits(BindReact, _Component);
+	var Bar = (function (_Component) {
+	    _inherits(Bar, _Component);
 
-	    function BindReact(props, context) {
-	        _classCallCheck(this, BindReact);
+	    function Bar(props, context) {
+	        _classCallCheck(this, Bar);
 
 	        _Component.call(this, props, context);
 
@@ -2713,7 +2720,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	    }
 
-	    BindReact.prototype.render = function render() {
+	    Bar.prototype.render = function render() {
 	        var _props = this.props;
 	        var barName = _props.barName;
 	        var autoShowFetching = _props.autoShowFetching;
@@ -2721,17 +2728,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var Bar = this.barList[barName ? barName : 'web'];
 
-	        return autoShowFetching ? _react2['default'].createElement(
-	            Bar,
-	            null,
-	            children
-	        ) : null;
+	        return autoShowFetching ? _react2['default'].createElement(Bar, null) : null;
 	    };
 
-	    return BindReact;
+	    return Bar;
 	})(_react.Component);
 
-	exports['default'] = BindReact;
+	exports['default'] = Bar;
 	module.exports = exports['default'];
 
 /***/ },

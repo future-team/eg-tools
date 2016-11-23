@@ -15,6 +15,9 @@ function showLoading(method){
 
 function hideLoading(){
     fetching -= 1;
+    if(fetching<=0){
+        fetching = 0;
+    }
     if (fetching === 0) {
         dispatch({
             type: 'fetch_end'
@@ -24,9 +27,9 @@ function hideLoading(){
 
 
 function fetch(url,params={},success,error='notnull',opts={}){
-
+    const isLoadingBar = typeof(opts.isLoadingBar) =='boolean' ?opts.isLoadingBar : true;
     opts.success = function(data,xhr){
-        hideLoading();
+        hideLoading() ;
         success && success(data,xhr);
         fetch.successEvent(xhr)
     };
@@ -40,7 +43,7 @@ function fetch(url,params={},success,error='notnull',opts={}){
     };
     opts.data = params;
 
-    showLoading(opts.method ? opts.method : 'get');
+    isLoadingBar &&(showLoading(opts.method ? opts.method : 'get') );
 
     return request.fetch(url,opts );
 }
