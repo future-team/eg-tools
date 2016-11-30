@@ -56,6 +56,10 @@ let Req = class Request{
             },opts.timeout);
         }
 
+        if (opts.credentials === 'include') {
+            x.withCredentials = true;
+        }
+
         x.onreadystatechange = function() {
 
             switch (x.readyState){
